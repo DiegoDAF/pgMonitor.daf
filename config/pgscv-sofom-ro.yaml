@@ -1,0 +1,34 @@
+listen_address: 0.0.0.0:9923
+no_track_mode: false
+skip_conn_error_mode: true
+
+pooler:
+  max_conns: 5
+  min_conns: 2
+  min_idle_conns: 2
+
+cache:
+  type: "in-memory"
+  ttl: 60s
+  collectors:
+    postgres/indexes:
+      ttl: 15m
+    postgres/tables:
+      ttl: 15m
+    postgres/statements:
+      ttl: 5m
+
+services:
+  "sofom-ro:5432":
+    service_type: "postgres"
+    conninfo_file: "/run/secrets/sofom-ro.conn"
+    ssh_tunnel:
+      host: "lm1.tigris-trout.ts.net"
+      port: 22
+      user: "daf"
+      private_key: "/run/secrets/ssh_key"
+      keepalive_seconds: 30
+
+disable_collectors:
+  - system
+  - postgres/stattuple

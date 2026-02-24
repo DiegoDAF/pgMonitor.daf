@@ -1,0 +1,10 @@
+services:
+  pgscv-beta:
+    image: pgscv-daf:latest
+    container_name: pgscv-beta
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-beta.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/beta.conn:/run/secrets/beta.conn:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

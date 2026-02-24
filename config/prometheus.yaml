@@ -1,0 +1,41 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+        labels:
+          instance: ne-beta-tigris
+          name: ne-beta-tigris2
+          alias: ne-beta
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['localhost:8080']
+        labels:
+          instance: cadvisor-beta-tigris
+          name: cadvisor-beta-tigris2
+          alias: cadvisor-beta
+
+  - job_name: 'pgscv'
+    file_sd_configs:
+      - files:
+          - '/etc/prometheus/prometheus.d/*.yaml'
+        refresh_interval: 30s
+
+  # - job_name: pgexp-prod
+  #   static_configs:
+
+  #     - targets: ["pgexp-beta:9187"]
+  #       labels:
+  #         instance: beta-tigris
+  #         name: beta-tigris2
+  #         alias: beta
+
+  #     - targets: ["pgexp-disruptrw:9188"]
+  #       labels:
+  #         instance: aurora-disrupt-postgres-prod
+  #         name: aurora-disrupt-postgres-prod2
+  #         alias: disruptrw

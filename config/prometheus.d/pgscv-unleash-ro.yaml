@@ -1,0 +1,6 @@
+- targets: ['localhost:9932']
+  labels:
+    instance: unleash-prod-ro
+    name: unleash-db-mgt-prod
+    alias: unleash-ro
+    job: pgscv

@@ -1,0 +1,11 @@
+services:
+  pgscv-pg2-masdelivery:
+    image: pgscv-daf:latest
+    container_name: pgscv-pg2-masdelivery
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-pg2-masdelivery.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/pg2-masdelivery.conn:/run/secrets/pg2-masdelivery.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

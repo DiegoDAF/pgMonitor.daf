@@ -1,0 +1,6 @@
+- targets: ['localhost:9928']
+  labels:
+    instance: spei-prod-ro
+    name: spei-db-mgt-prod
+    alias: spei-ro
+    job: pgscv

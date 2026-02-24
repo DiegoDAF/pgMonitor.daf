@@ -1,0 +1,6 @@
+- targets: ['localhost:9905']
+  labels:
+    instance: waitlist-prod-rw
+    name: waitlist-antpack-db-mgt-prod
+    alias: waitlist
+    job: pgscv

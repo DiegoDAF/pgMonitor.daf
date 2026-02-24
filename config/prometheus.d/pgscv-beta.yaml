@@ -1,0 +1,6 @@
+- targets: ['localhost:9890']
+  labels:
+    instance: beta-tigris
+    name: beta-tigris2
+    alias: beta
+    job: pgscv

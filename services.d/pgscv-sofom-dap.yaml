@@ -1,0 +1,11 @@
+services:
+  pgscv-sofom-dap:
+    image: pgscv-daf:latest
+    container_name: pgscv-sofom-dap
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-sofom-dap.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/sofom-dap.conn:/run/secrets/sofom-dap.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

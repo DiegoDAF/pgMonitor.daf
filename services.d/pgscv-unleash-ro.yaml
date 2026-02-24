@@ -1,0 +1,11 @@
+services:
+  pgscv-unleash-ro:
+    image: pgscv-daf:latest
+    container_name: pgscv-unleash-ro
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-unleash-ro.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/unleash-ro.conn:/run/secrets/unleash-ro.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

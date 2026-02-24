@@ -1,0 +1,6 @@
+- targets: ['localhost:9899']
+  labels:
+    instance: sofom-dap-prod-rw
+    name: sofom-dap-db-mgt-prod
+    alias: sofom-dap
+    job: pgscv

@@ -1,0 +1,6 @@
+- targets: ['localhost:9906']
+  labels:
+    instance: pg2-masdelivery-prod
+    name: pg2.masdelivery.com
+    alias: pg2-masdelivery
+    job: pgscv

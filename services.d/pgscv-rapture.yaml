@@ -1,0 +1,11 @@
+services:
+  pgscv-rapture:
+    image: pgscv-daf:latest
+    container_name: pgscv-rapture
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-rapture.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/rapture.conn:/run/secrets/rapture.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

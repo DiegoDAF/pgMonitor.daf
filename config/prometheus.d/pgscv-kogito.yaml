@@ -1,0 +1,6 @@
+- targets: ['localhost:9896']
+  labels:
+    instance: kogito-prod-rw
+    name: kogito-db-mgt-prod
+    alias: kogito
+    job: pgscv

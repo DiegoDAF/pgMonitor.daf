@@ -1,0 +1,11 @@
+services:
+  pgscv-kogito:
+    image: pgscv-daf:latest
+    container_name: pgscv-kogito
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-kogito.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/kogito.conn:/run/secrets/kogito.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

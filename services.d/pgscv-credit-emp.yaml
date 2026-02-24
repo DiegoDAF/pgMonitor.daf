@@ -1,0 +1,11 @@
+services:
+  pgscv-credit-emp:
+    image: pgscv-daf:latest
+    container_name: pgscv-credit-emp
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-credit-emp.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/credit-emp.conn:/run/secrets/credit-emp.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

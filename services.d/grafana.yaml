@@ -1,0 +1,63 @@
+##
+## TO DO
+## CONFIG TELEGRAM
+
+services:
+  ## GRAFANA
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana                                    ## General data location
+      - ./../config/grafana.conf.d:/etc/grafana/provisioning             ## Where the dashboards and datasources are located
+    environment:
+      # GENERAL
+      - GF_SERVER_ROOT_URL=http://localhost:3000                         ## Local domain, to add in the messages
+      - GF_SECURITY_ADMIN_PASSWORD=admin                                 ## default user and password
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_EMAIL=diegodaf@gmail.com                       ## default admin email address
+      - GF_LOG_LEVEL=debug
+      # dashboard
+      - GF_DASHBOARDS_MIN_REFRESH_INTERVAL=5s                            ## just to prevent overheat
+        ## default dashboard path, from provisioning folder, mapped, etc
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/etc/grafana/provisioning/dashboards/dashboardList/pg2-diego.json
+      # style
+      - GF_USERS_DEFAULT_THEME=dark                                      ## to prevent bugs
+      - GF_USERS_DEFAULT_LANGUAGE=en-US
+      # Conectate al prometheus via internal docker name
+      - GF_DATASOURCES__prometheus__url=http://localhost:9090             ## to connect the prometheus via host network
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      # AWS CloudWatch credentials (loaded from secret files)
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      # EMAIL settings to use gmail to send the alerts
+      # - GF_SMTP_ENABLED=true
+      # - GF_ENABLE_GZIP=true
+      # - GF_SMTP_HOST=smtp.gmail.com:587
+      # - GF_SMTP_USER__FILE=/run/secrets/smtp_user
+      # - GF_SMTP_PASSWORD__FILE=/run/secrets/smtp_password
+      # - GF_SMTP_SKIP_VERIFY=false
+      # - GF_SMTP_FROM_NAME=GRaFana
+      # TELEGRAM KEYS
+      #- GF_CONTACTPOINT_CHATID= -4273432726
+      # - GF_CONTACTPOINT_CHATID__FILE=/run/secrets/telegram_chat_id
+      # - GF_CONTACTPOINT_BOTTOKEN__FILE=/run/secrets/telegram_bot_token
+
+    # secrets:
+    #   - smtp_user
+    #   - smtp_password
+    #   # - telegram_chat_id
+    #   - telegram_bot_token
+
+    network_mode: host
+
+# secrets:
+#   smtp_user:
+#     file: ./../secrets/smtp_user.conn
+#   smtp_password:
+#     file: ./../secrets/smtp_password.conn
+#   # telegram_chat_id:
+#   #   file: ./../secrets/telegram-chat-id.conn
+#   telegram_bot_token:
+#     file: ./../secrets/telegram-bot-token.conn

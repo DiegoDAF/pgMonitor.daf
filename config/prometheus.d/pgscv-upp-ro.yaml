@@ -1,0 +1,6 @@
+- targets: ['localhost:9931']
+  labels:
+    instance: upp-prod-ro
+    name: unified-payments-platform-db-mgt-prod
+    alias: upp-ro
+    job: pgscv

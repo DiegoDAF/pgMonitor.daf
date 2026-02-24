@@ -1,0 +1,11 @@
+services:
+  pgscv-sofipo-ro:
+    image: pgscv-daf:latest
+    container_name: pgscv-sofipo-ro
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-sofipo-ro.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/sofipo-ro.conn:/run/secrets/sofipo-ro.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

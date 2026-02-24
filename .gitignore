@@ -1,0 +1,4 @@
+backup.*.yaml
+secrets/*.conn
+runme.sh
+.env

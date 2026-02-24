@@ -1,0 +1,11 @@
+services:
+  pgscv-stori-shared-ro:
+    image: pgscv-daf:latest
+    container_name: pgscv-stori-shared-ro
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-stori-shared-ro.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/stori-shared-ro.conn:/run/secrets/stori-shared-ro.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

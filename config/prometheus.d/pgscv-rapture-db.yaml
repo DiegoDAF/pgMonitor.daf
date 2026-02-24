@@ -1,0 +1,6 @@
+- targets: ['localhost:9898']
+  labels:
+    instance: rapture-db-prod-rw
+    name: rapture-db-prod-cluster
+    alias: rapture-db
+    job: pgscv

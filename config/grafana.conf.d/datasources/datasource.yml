@@ -1,0 +1,28 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+  - name: CloudWatch
+    orgId: 1
+
+datasources:
+- name: Prometheus
+  type: prometheus
+  uid: prometheus
+  url: http://localhost:9090
+  isDefault: true
+  access: proxy
+  editable: true
+
+- name: CloudWatch
+  type: cloudwatch
+  uid: cloudwatch
+  access: proxy
+  editable: true
+  jsonData:
+    authType: keys
+    defaultRegion: us-east-1
+  secureJsonData:
+    accessKey: $__env{AWS_ACCESS_KEY_ID}
+    secretKey: $__env{AWS_SECRET_ACCESS_KEY}

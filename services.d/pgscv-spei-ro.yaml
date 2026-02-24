@@ -1,0 +1,11 @@
+services:
+  pgscv-spei-ro:
+    image: pgscv-daf:latest
+    container_name: pgscv-spei-ro
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-spei-ro.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/spei-ro.conn:/run/secrets/spei-ro.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

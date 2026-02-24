@@ -1,0 +1,6 @@
+- targets: ['localhost:9921']
+  labels:
+    instance: momo-prod-ro
+    name: momo-db-mgt-prod
+    alias: momo-ro
+    job: pgscv

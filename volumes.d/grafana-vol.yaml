@@ -1,0 +1,5 @@
+## Volumes
+volumes:
+  grafana-data:                                                       ## volume for grafana data
+    external: true                                                    ## creating using:
+    name: grafana-data                                                ## docker volume create grafana-data

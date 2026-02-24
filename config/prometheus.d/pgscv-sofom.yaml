@@ -1,0 +1,6 @@
+- targets: ['localhost:9894']
+  labels:
+    instance: sofom-prod-rw
+    name: calakmul-sofom-prod
+    alias: sofom
+    job: pgscv

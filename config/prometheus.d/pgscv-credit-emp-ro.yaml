@@ -1,0 +1,6 @@
+- targets: ['localhost:9924']
+  labels:
+    instance: credit-emp-prod-ro
+    name: credit-empowerment-db-mgt-prod
+    alias: credit-emp-ro
+    job: pgscv

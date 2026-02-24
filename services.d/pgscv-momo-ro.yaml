@@ -1,0 +1,11 @@
+services:
+  pgscv-momo-ro:
+    image: pgscv-daf:latest
+    container_name: pgscv-momo-ro
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-momo-ro.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/momo-ro.conn:/run/secrets/momo-ro.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

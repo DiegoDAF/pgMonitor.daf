@@ -1,0 +1,51 @@
+##
+##   Load everything from separated individual files.
+##
+
+include:
+  - ./network.d/localprom.yaml                                        ## Network config
+  - ./volumes.d/grafana-vol.yaml                                      ## Disk for Grafana data
+  - ./volumes.d/prometheus-vol.yaml                                   ## Disk for Prometheus data
+
+  ## Core services
+  - ./services.d/prometheus.yaml                                      ## Prometheus service
+  - ./services.d/grafana.yaml                                         ## Grafana service
+  - ./services.d/node_exporter.yaml                                   ## localHost service
+  - ./services.d/cadvisor.yaml                                        ## Container Advisor service
+
+  ## Alerting (uncomment when ready)
+  #- ./services.d/alertmanager.yaml                                   ## Alertmanager service
+
+  ## PostgreSQL monitoring with pgscv — RW (writer endpoints)
+  - ./services.d/pgscv-beta.yaml                                      ## pgscv for beta (direct)
+  - ./services.d/pgscv-disrupt.yaml                                   ## pgscv for disrupt RW :9891
+  - ./services.d/pgscv-momo.yaml                                      ## pgscv for momo RW :9892
+  - ./services.d/pgscv-sofipo.yaml                                    ## pgscv for sofipo RW :9893
+  - ./services.d/pgscv-sofom.yaml                                     ## pgscv for sofom RW :9894
+  - ./services.d/pgscv-credit-emp.yaml                                ## pgscv for credit-emp RW :9895
+  - ./services.d/pgscv-kogito.yaml                                    ## pgscv for kogito RW :9896
+  #- ./services.d/pgscv-rapture.yaml                                  ## pgscv for rapture RW (password pendiente)
+  - ./services.d/pgscv-rapture-db.yaml                                ## pgscv for rapture-db RW :9898
+  - ./services.d/pgscv-sofom-dap.yaml                                 ## pgscv for sofom-dap RW :9899
+  - ./services.d/pgscv-spei.yaml                                      ## pgscv for spei RW :9900
+  - ./services.d/pgscv-stori-shared.yaml                              ## pgscv for stori-shared RW :9901
+  - ./services.d/pgscv-turbo.yaml                                     ## pgscv for turbo RW :9902
+  - ./services.d/pgscv-upp.yaml                                       ## pgscv for upp RW :9903
+  - ./services.d/pgscv-unleash.yaml                                   ## pgscv for unleash RW :9904
+  - ./services.d/pgscv-waitlist.yaml                                  ## pgscv for waitlist RW :9905
+  - ./services.d/pgscv-pg2-masdelivery.yaml                           ## pgscv for pg2.masdelivery.com :9906
+
+  ## PostgreSQL monitoring with pgscv — RO (reader endpoints)
+  - ./services.d/pgscv-disrupt-ro.yaml                                ## pgscv for disrupt RO :9920
+  - ./services.d/pgscv-momo-ro.yaml                                   ## pgscv for momo RO :9921
+  - ./services.d/pgscv-sofipo-ro.yaml                                 ## pgscv for sofipo RO :9922
+  - ./services.d/pgscv-sofom-ro.yaml                                  ## pgscv for sofom RO :9923
+  - ./services.d/pgscv-credit-emp-ro.yaml                             ## pgscv for credit-emp RO :9924
+  - ./services.d/pgscv-kogito-ro.yaml                                 ## pgscv for kogito RO :9925
+  - ./services.d/pgscv-rapture-db-ro.yaml                             ## pgscv for rapture-db RO :9926
+  - ./services.d/pgscv-sofom-dap-ro.yaml                              ## pgscv for sofom-dap RO :9927
+  - ./services.d/pgscv-spei-ro.yaml                                   ## pgscv for spei RO :9928
+  - ./services.d/pgscv-stori-shared-ro.yaml                           ## pgscv for stori-shared RO :9929
+  - ./services.d/pgscv-turbo-ro.yaml                                  ## pgscv for turbo RO :9930
+  - ./services.d/pgscv-upp-ro.yaml                                    ## pgscv for upp RO :9931
+  - ./services.d/pgscv-unleash-ro.yaml                                ## pgscv for unleash RO :9932

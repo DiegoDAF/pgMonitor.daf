@@ -1,0 +1,6 @@
+- targets: ['localhost:9922']
+  labels:
+    instance: sofipo-prod-ro
+    name: calakmul-sofipo-prod
+    alias: sofipo-ro
+    job: pgscv

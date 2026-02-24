@@ -1,0 +1,11 @@
+services:
+  pgscv-turbo:
+    image: pgscv-daf:latest
+    container_name: pgscv-turbo
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-turbo.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/turbo.conn:/run/secrets/turbo.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

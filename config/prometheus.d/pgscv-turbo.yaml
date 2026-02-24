@@ -1,0 +1,6 @@
+- targets: ['localhost:9902']
+  labels:
+    instance: turbo-prod-rw
+    name: turbo-prod
+    alias: turbo
+    job: pgscv

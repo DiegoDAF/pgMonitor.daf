@@ -1,0 +1,11 @@
+services:
+  pgscv-upp:
+    image: pgscv-daf:latest
+    container_name: pgscv-upp
+    restart: unless-stopped
+    volumes:
+      - ./../config/pgscv-upp.yaml:/etc/pgscv.yaml:ro
+      - ./../secrets/upp.conn:/run/secrets/upp.conn:ro
+      - /home/daf/.ssh/id_ed25519_pgcli:/run/secrets/ssh_key:ro
+    command: ["--config-file=/etc/pgscv.yaml"]
+    network_mode: host

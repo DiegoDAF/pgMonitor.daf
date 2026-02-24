@@ -1,0 +1,14 @@
+services:
+  prometheus:                                                         ## prometheus config
+    image: prom/prometheus                                            ## select the image
+    container_name: prometheus                                        ## pick a friendly name
+    restart: unless-stopped                                           ## start the docker, after a host reboot
+    command:                                                          ##
+    - '--config.file=/etc/prometheus/prometheus.yaml'                 ## pick the custom config file, from mapped vol
+    - '--storage.tsdb.retention.time=2000d'                           ## config retention / 2k days
+    - '--web.enable-lifecycle'                                        ##
+    volumes:                                                          ##
+    - ./../config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro  ## map the config file as RO
+    - ./../config/prometheus.d:/etc/prometheus/prometheus.d:ro        ## modular targets (file_sd_configs)
+    - prometheus-data:/prometheus                                     ## DO NOT PUT A ./ AT THE BEGINING
+    network_mode: host

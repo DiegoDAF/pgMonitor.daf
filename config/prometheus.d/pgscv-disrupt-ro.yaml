@@ -1,0 +1,6 @@
+- targets: ['localhost:9920']
+  labels:
+    instance: disrupt-prod-ro
+    name: aurora-disrupt-postgres-prod-cluster
+    alias: disrupt-ro
+    job: pgscv

@@ -1,0 +1,5 @@
+## Volumes
+volumes:
+  prometheus-data:                                                    ## volume for prometheus data
+    external: true                                                    ## marked as external to prevent
+    name: prometheus-data                                             ## drop and lost the saved information

@@ -1,0 +1,6 @@
+- targets: ['localhost:9929']
+  labels:
+    instance: stori-shared-prod-ro
+    name: stori-shared-cluster-prod
+    alias: stori-shared-ro
+    job: pgscv
