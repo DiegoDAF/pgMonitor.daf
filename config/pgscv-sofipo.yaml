@@ -17,6 +17,8 @@ cache:
       ttl: 15m
     postgres/statements:
       ttl: 5m
+    postgres/custom:
+      ttl: 5m
 
 services:
   "sofipo:5432":
@@ -32,3 +34,72 @@ services:
 disable_collectors:
   - system
   - postgres/stattuple
+
+collectors:
+  postgres/custom:
+    subsystems:
+      sequence_exhaustion:
+        query: "select schemaname, sequencename, data_type::text as data_type, case when max_value > 0 then round((100.0 * coalesce(last_value, 0) / max_value)::numeric, 2)::float8 else 0 end as pct_used from pg_sequences where max_value > 0 and data_type::text in ('integer', 'smallint')"
+        metrics:
+          - name: pct_used
+            usage: GAUGE
+            labels:
+              - schemaname
+              - sequencename
+              - data_type
+            value: pct_used
+            description: "Percentage of sequence range consumed"
+      invalid_indexes:
+        query: "select n.nspname as schemaname, c.relname as indexname, t.relname as tablename, pg_relation_size(c.oid)::float8 as size_bytes from pg_index i join pg_class c on c.oid = i.indexrelid join pg_class t on t.oid = i.indrelid join pg_namespace n on n.oid = c.relnamespace where not i.indisvalid"
+        metrics:
+          - name: size_bytes
+            usage: GAUGE
+            labels:
+              - schemaname
+              - indexname
+              - tablename
+            value: size_bytes
+            description: "Size in bytes of invalid index"
+      orphaned_prepared_xacts:
+        query: "select gid, database, owner as username, extract(epoch from (now() - prepared))::float8 as age_seconds from pg_prepared_xacts where prepared < now() - interval '1 hour'"
+        metrics:
+          - name: age_seconds
+            usage: GAUGE
+            labels:
+              - gid
+              - database
+              - username
+            value: age_seconds
+            description: "Age in seconds of orphaned prepared transaction"
+      not_valid_constraints:
+        query: "select n.nspname as schemaname, c2.relname as tablename, c.conname as constraint_name, c.contype::text as constraint_type, 1::float8 as not_valid_count from pg_constraint c join pg_class c2 on c2.oid = c.conrelid join pg_namespace n on n.oid = c2.relnamespace where not c.convalidated"
+        metrics:
+          - name: not_valid_count
+            usage: GAUGE
+            labels:
+              - schemaname
+              - tablename
+              - constraint_name
+              - constraint_type
+            value: not_valid_count
+            description: "Constraint not validated (convalidated=false)"
+      tables_without_pk:
+        query: "select n.nspname as schemaname, c.relname as tablename, pg_total_relation_size(c.oid)::float8 as size_bytes from pg_class c join pg_namespace n on n.oid = c.relnamespace where c.relkind = 'r' and n.nspname not in ('pg_catalog', 'information_schema', 'pg_toast') and n.nspname not like 'pg_temp_%%' and not exists (select 1 from pg_index i where i.indrelid = c.oid and i.indisprimary) and pg_total_relation_size(c.oid) > 8192"
+        metrics:
+          - name: size_bytes
+            usage: GAUGE
+            labels:
+              - schemaname
+              - tablename
+            value: size_bytes
+            description: "Size of table without primary key (blocks logical replication)"
+      toast_bloat:
+        query: "select n.nspname as schemaname, c.relname as tablename, pg_relation_size(c.reltoastrelid)::float8 as toast_size_bytes from pg_class c join pg_namespace n on n.oid = c.relnamespace where c.relkind = 'r' and c.reltoastrelid > 0 and n.nspname not in ('pg_catalog', 'information_schema') and pg_relation_size(c.reltoastrelid) > 104857600"
+        metrics:
+          - name: toast_size_bytes
+            usage: GAUGE
+            labels:
+              - schemaname
+              - tablename
+            value: toast_size_bytes
+            description: "TOAST table size in bytes (only tables > 100MB)"
