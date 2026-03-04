@@ -20,6 +20,8 @@ scrape_configs:
           alias: cadvisor-beta
 
   - job_name: 'pgscv'
+    scrape_interval: 30s
+    scrape_timeout: 25s
     file_sd_configs:
       - files:
           - '/etc/prometheus/prometheus.d/*.yaml'

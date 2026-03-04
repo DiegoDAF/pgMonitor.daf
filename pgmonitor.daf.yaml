@@ -32,7 +32,6 @@ include:
   - ./services.d/pgscv-turbo.yaml                                     ## pgscv for turbo RW :9902
   - ./services.d/pgscv-upp.yaml                                       ## pgscv for upp RW :9903
   - ./services.d/pgscv-unleash.yaml                                   ## pgscv for unleash RW :9904
-  - ./services.d/pgscv-waitlist.yaml                                  ## pgscv for waitlist RW :9905
   - ./services.d/pgscv-pg2-masdelivery.yaml                           ## pgscv for pg2.masdelivery.com :9906
 
   ## PostgreSQL monitoring with pgscv — RO (reader endpoints)
